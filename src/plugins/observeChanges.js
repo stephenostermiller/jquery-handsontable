@@ -114,7 +114,7 @@
     }
 
     function parsePath(path){
-      var match = path.match(/^\/(\d)\/?(\d)?$/);
+      var match = path.match(/^\/(\d)\/?(.*)?$/);
 
       return {
         row: parseInt(match[1], 10),
