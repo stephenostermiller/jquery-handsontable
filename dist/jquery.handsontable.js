@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Tue Aug 27 2013 12:38:58 GMT+0200 (CEST)
+ * Date: Tue Sep 03 2013 09:29:10 GMT-0400 (EDT)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
@@ -3878,6 +3878,14 @@ HandsontableTextEditorClass.prototype.bindTemporaryEvents = function (td, row, c
   var that = this;
 
   this.state = this.STATE_VIRGIN;
+  
+  function onCellClick() {
+    if (cellProperties.instance.getSettings().clickBeginsEditing) {
+      that.TEXTAREA.value = that.originalValue;
+      that.instance.destroyEditor();
+      that.beginEditing(row, col, prop, true);
+    }
+  }
 
   function onDblClick() {
     that.TEXTAREA.value = that.originalValue;
@@ -3937,6 +3945,7 @@ HandsontableTextEditorClass.prototype.bindTemporaryEvents = function (td, row, c
 HandsontableTextEditorClass.prototype.unbindTemporaryEvents = function () {
   this.instance.removeHook('beforeKeyDown', this.beforeKeyDownHook);
   this.instance.view.wt.update('onCellDblClick', null);
+  this.instance.view.wt.update('clickBeginsEditing', null);
 };
 
 /**
@@ -8722,6 +8731,7 @@ function WalkontableEvent(instance) {
           }, 500);
         }
       }
+      if (cell.TD && cell.TD.nodeName=='TD') that.instance.getSetting('onCellClick', event, cell.coords, cell.TD);
     }
   };
 
@@ -9681,6 +9691,7 @@ function WalkontableSettings(instance, settings) {
     onCellMouseOver: null,
 //    onCellMouseOut: null,
     onCellDblClick: null,
+    onCellClick : null,
     onCellCornerMouseDown: null,
     onCellCornerDblClick: null,
     beforeDraw: null,
@@ -10027,6 +10038,7 @@ WalkontableTable.prototype.adjustColumns = function (TR, desiredCount) {
   var count = TR.childNodes.length;
   while (count < desiredCount) {
     var TD = document.createElement('TD');
+    TD.setAttribute('contenteditable','true');
     TR.appendChild(TD);
     count++;
   }
