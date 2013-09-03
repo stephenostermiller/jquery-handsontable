@@ -262,6 +262,7 @@ WalkontableTable.prototype.adjustColumns = function (TR, desiredCount) {
   var count = TR.childNodes.length;
   while (count < desiredCount) {
     var TD = document.createElement('TD');
+    TD.setAttribute('contenteditable','true');
     TR.appendChild(TD);
     count++;
   }
