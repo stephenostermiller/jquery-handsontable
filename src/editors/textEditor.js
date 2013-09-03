@@ -141,6 +141,8 @@ HandsontableTextEditorClass.prototype.bindTemporaryEvents = function (td, row, c
       that.beginEditing(row, col, prop, true);
     }
   }
+  
+  this.instance.view.wt.update('onCellClick', onCellClick);
 
   function onDblClick() {
     that.TEXTAREA.value = that.originalValue;
