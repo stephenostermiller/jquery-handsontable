@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  * http://handsontable.com/
  *
- * Date: Tue Sep 03 2013 09:29:10 GMT-0400 (EDT)
+ * Date: Tue Sep 03 2013 10:53:10 GMT-0400 (EDT)
  */
 /*jslint white: true, browser: true, plusplus: true, indent: 4, maxerr: 50 */
 
@@ -3886,6 +3886,8 @@ HandsontableTextEditorClass.prototype.bindTemporaryEvents = function (td, row, c
       that.beginEditing(row, col, prop, true);
     }
   }
+  
+  this.instance.view.wt.update('onCellClick', onCellClick);
 
   function onDblClick() {
     that.TEXTAREA.value = that.originalValue;
