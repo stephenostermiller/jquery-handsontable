@@ -93,6 +93,7 @@ function WalkontableEvent(instance) {
           }, 500);
         }
       }
+      if (cell.TD && cell.TD.nodeName=='TD') that.instance.getSetting('onCellClick', event, cell.coords, cell.TD);
     }
   };
 

@@ -133,6 +133,14 @@ HandsontableTextEditorClass.prototype.bindTemporaryEvents = function (td, row, c
   var that = this;
 
   this.state = this.STATE_VIRGIN;
+  
+  function onCellClick() {
+    if (cellProperties.instance.getSettings().clickBeginsEditing) {
+      that.TEXTAREA.value = that.originalValue;
+      that.instance.destroyEditor();
+      that.beginEditing(row, col, prop, true);
+    }
+  }
 
   function onDblClick() {
     that.TEXTAREA.value = that.originalValue;
@@ -192,6 +200,7 @@ HandsontableTextEditorClass.prototype.bindTemporaryEvents = function (td, row, c
 HandsontableTextEditorClass.prototype.unbindTemporaryEvents = function () {
   this.instance.removeHook('beforeKeyDown', this.beforeKeyDownHook);
   this.instance.view.wt.update('onCellDblClick', null);
+  this.instance.view.wt.update('clickBeginsEditing', null);
 };
 
 /**
